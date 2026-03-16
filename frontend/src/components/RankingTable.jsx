@@ -12,12 +12,12 @@ export default function RankingTable({ ranking = [] }) {
     );
   }
 
-  const th = { padding: "10px", textAlign: "left", color: "#eee", background: "#333" };
-  const td = { padding: "10px", color: "#ddd", borderBottom: "1px solid #444" };
+  const th = { padding: "10px", textAlign: "left", color: "#ffffff", background: "#00838f" };
+  const td = { padding: "10px", color: "#263238", borderBottom: "1px solid #eceff1" };
 
   return (
     <div style={{ width: "100%", marginTop: "20px" }}>
-      <h2 style={{ color: "#f5c518" }}>🏆 Ranking</h2>
+      <h2 style={{ color: "#00838f" }}>🏆 Ranking</h2>
       <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
           <tr>
@@ -31,7 +31,7 @@ export default function RankingTable({ ranking = [] }) {
             <tr key={p.usuarioId || idx}>
               <td style={td}>{idx + 1}</td>
               <td style={td}>{p.nombre || "Anónimo"}</td>
-              <td style={{ ...td, fontWeight: "bold", color: "#f5c518" }}>
+              <td style={{ ...td, fontWeight: "bold", color: "#00838f" }}>
                 {p.puntaje || 0}
               </td>
             </tr>

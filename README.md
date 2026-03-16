@@ -1,54 +1,99 @@
-# API de Usuarios y Roles
+# 🏹 Robin HOOT — Plataforma de Quizzes Interactivos
+
+Aplicación web SPA de quizzes en tiempo real construida con **React + Vite** (frontend) y **Express + MongoDB + Socket.io** (backend).
+
+## Stack Tecnológico
+
+| Tecnología | Versión | Uso |
+|---|---|---|
+| Vite | 6.0.5 | Bundler y dev server |
+| React | 18.3.1 | UI Library |
+| React Router DOM | 7.x | Enrutamiento SPA |
+| React Hook Form | 7.x | Manejo de formularios |
+| Zod | 3.x | Validación de esquemas |
+| Socket.io Client | 4.8.1 | Comunicación en tiempo real |
 
 ## Estructura del Proyecto
 
 ```
-Proyecto-3/
-├── models/
-│   ├── Rol.js
-│   └── Usuario.js
-├── controllers/
-│   ├── rolController.js
-│   └── usuarioController.js
-├── routes/
-│   ├── rolRoutes.js
-│   └── usuarioRoutes.js
-├── middlewares/
-│   └── validacion.js
-├── config/
-│   └── db.js
-├── server.js
-├── package.json
-├── .env.example
-└── README.md
+ROBIN-HOOT/
+├── frontend/
+│   ├── src/
+│   │   ├── components/       # Componentes reutilizables
+│   │   │   ├── ui/           # MyButton, CustomCard, FormInput, Modal, Navbar
+│   │   │   ├── GameBoard.jsx
+│   │   │   └── RankingTable.jsx
+│   │   ├── context/          # AuthContext (Context API)
+│   │   ├── hooks/            # useAuth (hook personalizado)
+│   │   ├── pages/            # LandingPage, LoginPage, RegisterPage, Dashboard
+│   │   ├── services/         # api.js (llamadas al backend)
+│   │   ├── App.jsx           # Router principal
+│   │   ├── App.css           # Estilos globales responsive
+│   │   └── main.jsx          # Entry point con AuthProvider
+│   ├── index.html
+│   ├── package.json
+│   └── vite.config.js
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── config/
+│   └── server.js
+└── docker-compose.yml
 ```
 
-## Instalación
+## Instalación y Ejecución
 
-1. Instalar dependencias:
+### Requisitos previos
+- Node.js 18+
+- MongoDB (local o Atlas)
+
+### Frontend
+
 ```bash
+cd frontend
 npm install
-```
-
-2. Crear archivo `.env` desde `.env.example`:
-```bash
-MONGO_URI=mongodb://localhost:27017/proyecto3
-```
-
-3. Ejecutar en desarrollo:
-```bash
 npm run dev
 ```
 
-## Endpoints de la API
+La app estará disponible en `http://localhost:5173`.
 
-### ROLES
+### Backend
 
-#### Obtener todos los roles
-- **GET** `/api/roles`
-- **Respuesta:**
-```json
-[
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+El servidor API estará en `http://localhost:5000`.
+
+### Variables de entorno
+
+Crear un archivo `.env` en `/backend` basado en `.env.example`:
+
+```env
+MONGO_URI=mongodb://localhost:27017/robinhoot
+JWT_SECRET=tu_secreto_jwt
+PORT=5000
+```
+
+En `/frontend` puedes crear un `.env` opcional:
+
+```env
+VITE_BACKEND_URL=http://localhost:5000
+```
+
+## Funcionalidades
+
+- **Landing Page**: Página de aterrizaje con sección Hero y secciones informativas
+- **Autenticación**: Login y registro con validaciones (React Hook Form + Zod)
+- **Dashboard protegido**: Vista exclusiva para usuarios autenticados con ranking y datos
+- **Gestión de estado global**: AuthContext con Context API
+- **Componentes reutilizables**: MyButton, CustomCard, FormInput, Modal, Navbar
+- **Responsive**: Diseño adaptable a móviles, tablets y escritorio
+- **Tiempo real**: Comunicación con Socket.io para partidas en vivo
   {
     "_id": "...",
     "nombre": "ADMIN",
