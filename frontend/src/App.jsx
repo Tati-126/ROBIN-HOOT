@@ -9,9 +9,8 @@ import "./App.css";
 
 /** Ruta protegida: redirige a /login si no hay usuario */
 function RutaProtegida({ children }) {
-  const { usuario, cargando } = useAuth();
-  if (cargando) return <p style={{ textAlign: "center", padding: "40px" }}>Cargando...</p>;
-  return usuario ? children : <Navigate to="/login" />;
+  const { user, token } = useAuth();
+  return user || token ? children : <Navigate to="/login" />;
 }
 
 export default function App() {
