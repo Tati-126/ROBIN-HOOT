@@ -110,7 +110,7 @@ export default function LandingPage() {
             <CustomCard variant="blue" icon={<Trophy size={48} />} title="Muro de Honor">
               <p>Tu esfuerzo es visible. Los mejores de cada facultad aparecen en el ranking global semanal.</p>
             </CustomCard>
-            <CustomCard variant="purple" icon={<Target size={48} />} title="IA Predictiva">
+            <CustomCard variant="purple" icon={<Target size={48} />} title="Web Predictiva">
               <p>El sistema identifica tus temas débiles y te propone desafíos personalizados para mejorar.</p>
             </CustomCard>
           </div>
