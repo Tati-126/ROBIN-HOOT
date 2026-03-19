@@ -5,6 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import FormInput from "../components/ui/FormInput";
 import MyButton from "../components/ui/MyButton";
+import CustomCard from "../components/ui/CustomCard";
+import { Target } from "lucide-react";
+
 
 const loginSchema = z.object({
   email: z
@@ -48,7 +51,7 @@ export default function LoginPage() {
   return (
     <div className="auth-page" style={{ backgroundColor: "var(--color-bg)", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 80px)" }}>
       <div className="auth-container" style={{ width: "100%", maxWidth: "450px", padding: "20px" }}>
-        <CustomCard variant="primary" title="🏹 Iniciar Sesión">
+        <CustomCard variant="primary" title={<span style={{ display: "flex", alignItems: "center", gap: "10px" }}><Target size={24} /> Iniciar Sesión</span>}>
           <p className="auth-subtitle" style={{ textAlign: "center", marginBottom: "24px" }}>
             Bienvenido de nuevo a Robin HOOT
           </p>

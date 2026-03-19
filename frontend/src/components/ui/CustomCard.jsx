@@ -40,15 +40,18 @@ export default function CustomCard({
   };
 
   const iconStyle = {
-    fontSize: "2rem",
-    backgroundColor: "#f5f5f5",
+    fontSize: "1.5rem",
+    backgroundColor: "rgba(0,0,0,0.05)",
     width: "48px",
     height: "48px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: "8px",
+    borderRadius: "12px",
+    color: "inherit",
+    flexShrink: 0
   };
+
 
   const titleStyle = {
     fontSize: "1.25rem",

@@ -26,7 +26,7 @@ export default function Login({ onLoginSuccess }) {
       }
       
       const data = await loginUsuario(email, password);
-      setSuccess("✅ Login exitoso");
+      setSuccess("Login exitoso");
       
       // Llamar callback al padre
       if (onLoginSuccess) {
@@ -55,7 +55,7 @@ export default function Login({ onLoginSuccess }) {
       }
 
       const data = await registrarUsuario(nombre, email, password);
-      setSuccess("✅ Usuario registrado. Ahora puedes iniciar sesión");
+      setSuccess("Usuario registrado. Ahora puedes iniciar sesión");
       
       // Limpiar formulario
       setNombre("");

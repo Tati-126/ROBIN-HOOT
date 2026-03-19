@@ -1,3 +1,5 @@
+import { BarChart2 } from "lucide-react";
+
 /**
  * RankingTable - Tabla de posiciones con estilo UP
  */
@@ -5,10 +7,13 @@ export default function RankingTable({ ranking = [] }) {
   if (!ranking || ranking.length === 0) {
     return (
       <div style={{ padding: "40px", textAlign: "center", color: "var(--color-text-muted)" }}>
-        <p style={{ fontSize: "1.2rem" }}>📊 Aún no hay desafíos completados...</p>
+        <p style={{ fontSize: "1.2rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
+          <BarChart2 size={24} /> Aún no hay desafíos completados...
+        </p>
       </div>
     );
   }
+
 
   const th = { 
     padding: "16px", 

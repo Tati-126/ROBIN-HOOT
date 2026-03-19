@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import MyButton from "../components/ui/MyButton";
 import CustomCard from "../components/ui/CustomCard";
+import { Zap, Trophy, Target, Award, Rocket, Smile, ArrowRight } from "lucide-react";
 
 /**
  * LandingPage - Estilo Kahoot + Uniputumayo
@@ -28,7 +29,7 @@ export default function LandingPage() {
           {usuario ? (
             <Link to="/dashboard">
               <MyButton variant="yellow" style={{ fontSize: "1.2rem", padding: "16px 40px" }}>
-                Ir al Dashboard
+                Panel de Juego <ArrowRight size={20} style={{ marginLeft: "8px" }} />
               </MyButton>
             </Link>
           ) : (
@@ -56,21 +57,21 @@ export default function LandingPage() {
         <div className="features-grid">
           <CustomCard 
             variant="purple" 
-            icon="⚡" 
+            icon={<Zap size={24} />} 
             title="En Vivo"
           >
             Participa en partidas en tiempo real con tus compañeros y compite por el primer lugar.
           </CustomCard>
           <CustomCard 
             variant="blue" 
-            icon="🏆" 
+            icon={<Trophy size={24} />} 
             title="Ranking"
           >
             Gana puntos por rapidez y precisión. ¡Demuestra que eres el mejor de la UP!
           </CustomCard>
           <CustomCard 
             variant="yellow" 
-            icon="🎯" 
+            icon={<Target size={24} />} 
             title="Dinámico"
           >
             Quizzes interactivos diseñados para reforzar lo aprendido en clase de forma divertida.
@@ -81,13 +82,13 @@ export default function LandingPage() {
       {/* ─── Sección: Pasos ──────────────────────────────── */}
       <section className="section section-dark" style={{ backgroundColor: "#f9f9f9", borderRadius: "40px 40px 0 0" }}>
         <div className="steps-grid">
-          <CustomCard variant="red" icon="1️⃣" title="Regístrate">
+          <CustomCard variant="red" icon={<Smile size={24} />} title="Regístrate">
             Crea tu perfil institucional en segundos.
           </CustomCard>
-          <CustomCard variant="primary" icon="2️⃣" title="Únete">
+          <CustomCard variant="primary" icon={<Rocket size={24} />} title="Únete">
             Ingresa el código de la partida de tu profesor.
           </CustomCard>
-          <CustomCard variant="blue" icon="3️⃣" title="¡Gana!">
+          <CustomCard variant="blue" icon={<Award size={24} />} title="¡Gana!">
             Responde rápido y sube al podio.
           </CustomCard>
         </div>
@@ -99,4 +100,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
 

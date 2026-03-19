@@ -7,6 +7,10 @@ import { registrarUsuario } from "../services/api";
 import FormInput from "../components/ui/FormInput";
 import MyButton from "../components/ui/MyButton";
 import Modal from "../components/ui/Modal";
+import CustomCard from "../components/ui/CustomCard";
+import { UserPlus, Sparkles } from "lucide-react";
+
+
 
 const registerSchema = z
   .object({
@@ -67,7 +71,7 @@ export default function RegisterPage() {
   return (
     <div className="auth-page" style={{ backgroundColor: "var(--color-bg)", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 80px)" }}>
       <div className="auth-container" style={{ width: "100%", maxWidth: "480px", padding: "20px" }}>
-        <CustomCard variant="primary" title="🏹 Crear Cuenta">
+        <CustomCard variant="primary" title={<span style={{ display: "flex", alignItems: "center", gap: "10px" }}><UserPlus size={24} /> Crear Cuenta</span>}>
           <p className="auth-subtitle" style={{ textAlign: "center", marginBottom: "24px" }}>
             Regístrate para empezar a jugar
           </p>
@@ -131,7 +135,7 @@ export default function RegisterPage() {
         </CustomCard>
       </div>
 
-      <Modal isOpen={modalOpen} onClose={handleModalClose} title="¡Registro Exitoso!">
+      <Modal isOpen={modalOpen} onClose={handleModalClose} title={<span style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center" }}><Sparkles size={24} color="var(--color-kahoot-yellow)" /> ¡Registro Exitoso!</span>}>
         <div style={{ textAlign: "center", padding: "10px" }}>
           <p style={{ color: "var(--color-text-muted)", marginBottom: "30px", fontSize: "1.1rem" }}>
             Tu cuenta ha sido creada correctamente. ¡Bienvenido a la comunidad!
@@ -141,6 +145,7 @@ export default function RegisterPage() {
           </MyButton>
         </div>
       </Modal>
+
     </div>
   );
 }

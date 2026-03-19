@@ -2,6 +2,7 @@ import { useState } from "react";
 import { postToBackend } from "../services/api.js";
 import CustomCard from "./ui/CustomCard";
 import MyButton from "./ui/MyButton";
+import { Gamepad2, Send, AlertCircle, CheckCircle } from "lucide-react";
 
 /**
  * GameBoard - Componente de prueba de conexión con estilo gamificado
@@ -34,7 +35,7 @@ export default function GameBoard() {
 
   return (
     <div style={{ marginTop: "20px" }}>
-      <CustomCard variant="yellow" icon="🎮" title="Prueba de Conexión">
+      <CustomCard variant="yellow" icon={<Gamepad2 size={24} />} title="Prueba de Conexión">
         <p style={{ marginBottom: "20px" }}>
           Utiliza este panel para verificar la comunicación en tiempo real con el servidor de la Universidad.
         </p>
@@ -46,7 +47,7 @@ export default function GameBoard() {
           fullWidth
           style={{ padding: "16px" }}
         >
-          {loading ? "CONECTANDO..." : "ENVIAR SEÑAL DE PRUEBA"}
+          {loading ? "CONECTANDO..." : <span style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}><Send size={18} /> ENVIAR SEÑAL DE PRUEBA</span>}
         </MyButton>
 
         {error && (
@@ -57,9 +58,12 @@ export default function GameBoard() {
             color: "#fff",
             borderRadius: "12px",
             fontWeight: "bold",
-            boxShadow: "0 4px 0 #a9132d"
+            boxShadow: "0 4px 0 #a9132d",
+            display: "flex",
+            alignItems: "center",
+            gap: "10px"
           }}>
-            ❌ Error de Conexión: {error}
+            <AlertCircle size={20} /> Error de Conexión: {error}
           </div>
         )}
 
@@ -71,9 +75,14 @@ export default function GameBoard() {
             color: "#fff",
             borderRadius: "12px",
             fontWeight: "bold",
-            boxShadow: "0 4px 0 #1b5e20"
+            boxShadow: "0 4px 0 #1b5e20",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px"
           }}>
-            ✅ Conexión Exitosa:
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <CheckCircle size={20} /> Conexión Exitosa:
+            </div>
             <pre style={{ 
               marginTop: "8px", 
               fontSize: "0.8rem", 
