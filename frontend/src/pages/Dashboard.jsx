@@ -37,63 +37,56 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-header">
-        <h1>Bienvenido, {usuario?.nombre}</h1>
-        <p>Panel principal de Robin HOOT</p>
+    <div className="dashboard" style={{ padding: "40px 20px" }}>
+      <div className="dashboard-header" style={{ marginBottom: "40px", textAlign: "center" }}>
+        <h1 style={{ fontSize: "2.5rem", fontWeight: "900", color: "var(--color-primary)" }}>
+          ¡Hola, {usuario?.nombre}! 🎮
+        </h1>
+        <p style={{ fontSize: "1.1rem", fontWeight: "500" }}>Bienvenido a tu panel de Robin HOOT</p>
       </div>
 
       {/* ─── Stats ────────────────────────────────────────── */}
-      <div className="dashboard-grid">
-        <div className="stat-card">
-          <div className="stat-value">{ranking.length}</div>
-          <div className="stat-label">Jugadores en Ranking</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value">{usuario?.email || "—"}</div>
-          <div className="stat-label" style={{ marginTop: "8px" }}>Tu Email</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-value" style={{ color: "#2e7d32" }}>Activo</div>
-          <div className="stat-label">Estado de Sesión</div>
-        </div>
+      <div className="dashboard-grid" style={{ marginBottom: "40px" }}>
+        <CustomCard variant="blue" title="Puntuación">
+          <div style={{ fontSize: "2.5rem", fontWeight: "900", textAlign: "center" }}>{ranking.length * 10}</div>
+          <p style={{ textAlign: "center" }}>Puntos acumulados</p>
+        </CustomCard>
+        <CustomCard variant="purple" title="Partidas">
+          <div style={{ fontSize: "2.5rem", fontWeight: "900", textAlign: "center" }}>5</div>
+          <p style={{ textAlign: "center" }}>Completadas esta semana</p>
+        </CustomCard>
+        <CustomCard variant="yellow" title="Ranking UP">
+          <div style={{ fontSize: "2.5rem", fontWeight: "900", textAlign: "center" }}>#3</div>
+          <p style={{ textAlign: "center" }}>Posición global</p>
+        </CustomCard>
       </div>
 
-      {/* ─── Info del usuario ─────────────────────────────── */}
-      <CustomCard icon="👤" title="Información del Usuario" style={{ marginBottom: "25px" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "15px", marginTop: "10px" }}>
-          <div>
-            <strong style={{ color: "#fff" }}>Nombre:</strong>
-            <p>{usuario?.nombre}</p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "30px" }}>
+        {/* ─── Info del usuario ─────────────────────────────── */}
+        <CustomCard icon="👤" title="Perfil Académico" variant="primary">
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "10px" }}>
+            <p><strong>Nombre:</strong> {usuario?.nombre}</p>
+            <p><strong>Email:</strong> {usuario?.email}</p>
+            <p><small style={{ opacity: 0.6 }}>ID: {usuario?._id || "UP-USER"}</small></p>
+            <MyButton variant="secondary" style={{ marginTop: "10px" }}>Editar Perfil</MyButton>
           </div>
-          <div>
-            <strong style={{ color: "#fff" }}>Email:</strong>
-            <p>{usuario?.email}</p>
-          </div>
-          <div>
-            <strong style={{ color: "#fff" }}>ID:</strong>
-            <p style={{ fontSize: "0.85rem" }}>{usuario?._id || usuario?.id || "—"}</p>
-          </div>
-        </div>
-      </CustomCard>
+        </CustomCard>
 
-      {/* ─── Ranking ──────────────────────────────────────── */}
-      <CustomCard icon="🏆" title="Ranking de Jugadores" style={{ marginBottom: "25px" }}>
-        {loading && <p style={{ textAlign: "center" }}>Cargando datos...</p>}
-        {error && <p style={{ color: "#d32f2f", textAlign: "center" }}>Error: {error}</p>}
-        {!loading && !error && <RankingTable ranking={ranking} />}
-      </CustomCard>
+        {/* ─── Ranking ──────────────────────────────────────── */}
+        <CustomCard icon="🏆" title="Líderes de la Semana" variant="yellow">
+          {loading && <p style={{ textAlign: "center" }}>Buscando jugadores...</p>}
+          {error && <p style={{ color: "var(--color-error)", textAlign: "center" }}>Error: {error}</p>}
+          {!loading && !error && <RankingTable ranking={ranking} />}
+        </CustomCard>
+      </div>
 
       {/* ─── Logout ──────────────────────────────────────── */}
-      <div style={{ textAlign: "center", marginTop: "30px" }}>
-        <MyButton variant="danger" onClick={handleLogout}>
-          Cerrar Sesión
+      <div style={{ textAlign: "center", marginTop: "60px" }}>
+        <MyButton variant="danger" onClick={handleLogout} style={{ padding: "14px 40px" }}>
+          CERRAR SESIÓN
         </MyButton>
       </div>
-
-      <footer className="footer" style={{ marginTop: "40px", border: "none", background: "transparent" }}>
-        <p>Backend: {import.meta.env.VITE_BACKEND_URL || "http://localhost:5000"}</p>
-      </footer>
     </div>
   );
 }
+

@@ -3,8 +3,7 @@ import { useAuth } from "../../hooks/useAuth";
 import MyButton from "./MyButton";
 
 /**
- * Navbar - Barra de navegación dinámica
- * Cambia según el estado de autenticación del usuario
+ * Navbar - Barra de navegación institucional (Estilo Uniputumayo)
  */
 export default function Navbar() {
   const { usuario, cerrarSesion } = useAuth();
@@ -16,24 +15,37 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-logo">
-        🏹 Robin HOOT
+    <nav className="navbar" style={{ 
+      backgroundColor: "var(--color-header)", 
+      borderBottom: "2px solid #eee",
+      padding: "16px 40px"
+    }}>
+      <Link to="/" className="navbar-logo" style={{ 
+        color: "var(--color-primary)", 
+        fontWeight: "900",
+        fontSize: "1.6rem",
+        display: "flex",
+        alignItems: "center",
+        gap: "4px"
+      }}>
+        <span style={{ color: "var(--color-kahoot-red)" }}>🏹</span> Robin HOOT
       </Link>
 
-      <div className="navbar-links">
+      <div className="navbar-links" style={{ gap: "20px" }}>
         {usuario ? (
           <>
-            <span className="navbar-user">Hola, {usuario.nombre}</span>
+            <span className="navbar-user" style={{ color: "var(--color-text)", fontWeight: "600" }}>
+              👤 {usuario.nombre}
+            </span>
             <Link to="/dashboard">
-              <MyButton variant="secondary" style={{ padding: "8px 16px", fontSize: "0.85rem" }}>
-                Dashboard
+              <MyButton variant="primary" style={{ padding: "10px 20px" }}>
+                Panel
               </MyButton>
             </Link>
             <MyButton
-              variant="danger"
+              variant="secondary"
               onClick={handleLogout}
-              style={{ padding: "8px 16px", fontSize: "0.85rem" }}
+              style={{ padding: "10px 20px" }}
             >
               Salir
             </MyButton>
@@ -41,14 +53,10 @@ export default function Navbar() {
         ) : (
           <>
             <Link to="/login">
-              <MyButton variant="secondary" style={{ padding: "8px 16px", fontSize: "0.85rem" }}>
-                Iniciar Sesión
-              </MyButton>
+              <MyButton variant="secondary">Entrar</MyButton>
             </Link>
             <Link to="/register">
-              <MyButton style={{ padding: "8px 16px", fontSize: "0.85rem" }}>
-                Registrarse
-              </MyButton>
+              <MyButton variant="primary">Unirse</MyButton>
             </Link>
           </>
         )}
@@ -56,3 +64,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

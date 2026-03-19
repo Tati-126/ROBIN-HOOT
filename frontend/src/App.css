@@ -1,26 +1,40 @@
-/* ─── Variables y Reset ─────────────────────────────────────────── */
+/* ─── Variables y Reset (Estilo Kahoot + Uniputumayo) ─────────────────────────── */
 :root {
-  --color-primary: #00838f;
-  --color-primary-hover: #006978;
-  --color-primary-light: #00acc1;
-  --color-header: #37474f;
-  --color-bg: #f0f4f7;
+  /* Marca Institucional */
+  --color-primary: #1b5e20;        /* Verde Bosque Uniputumayo */
+  --color-primary-hover: #2e7d32;
+  --color-primary-accent: #4caf50;
+  
+  /* Colores Kahoot (Vibrantes) */
+  --color-kahoot-purple: #46178f;
+  --color-kahoot-blue: #0542b9;
+  --color-kahoot-red: #e21b3c;
+  --color-kahoot-yellow: #d89e00;
+
+  /* Neutros y Fondos */
+  --color-header: #ffffff;
+  --color-bg: #f2f2f2;
   --color-bg-card: #ffffff;
-  --color-bg-input: #ffffff;
-  --color-text: #263238;
-  --color-text-muted: #607d8b;
-  --color-error: #d32f2f;
-  --color-error-bg: #fdecea;
-  --color-success: #2e7d32;
-  --color-success-bg: #e8f5e9;
-  --color-border: #cfd8dc;
-  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --color-text: #333333;
+  --color-text-muted: #666666;
+  
+  /* Feedback */
+  --color-error: #e21b3c;
+  --color-success: #26890c;
+  
+  /* UI Elements */
+  --border-radius: 12px;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-tactile: 0 4px 0 rgba(0,0,0,0.15);
+  --font-family: 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -28,12 +42,19 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   min-height: 100vh;
+  line-height: 1.5;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  transition: opacity 0.2s;
 }
+
+a:hover {
+  opacity: 0.8;
+}
+
 
 /* ─── Utilidades Responsive ────────────────────────────────────── */
 .container {

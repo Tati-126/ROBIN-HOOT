@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { postToBackend } from "../services/api.js";
+import CustomCard from "./ui/CustomCard";
+import MyButton from "./ui/MyButton";
 
 /**
- * PERSONA 3: Componente para hacer peticiones POST
- * TODO: Agregar validación de respuesta y mejorar UI
+ * GameBoard - Componente de prueba de conexión con estilo gamificado
  */
 export default function GameBoard() {
   const [loading, setLoading] = useState(false);
@@ -16,55 +17,77 @@ export default function GameBoard() {
     setResponse(null);
 
     try {
-      // Ejemplo de datos para enviar
       const testData = {
-        usuarioId: 1,
-        sessionId: "test-session",
-        respuesta: "opcion-a",
+        usuarioId: "user-test-123",
+        sessionId: "session-up-2026",
+        respuesta: "Kahoot-Style-Active",
       };
 
       const result = await postToBackend(testData);
       setResponse(result);
-      console.log("[GameBoard] Respuesta recibida:", result);
     } catch (err) {
       setError(err.message);
-      console.error("[GameBoard] Error:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: "20px", marginTop: "20px", border: "1px solid #444" }}>
-      <h2 style={{ color: "#f5c518" }}>🎮 Prueba de Conexión</h2>
-      
-      <button
-        onClick={handleSubmit}
-        disabled={loading}
-        style={{
-          padding: "10px 20px",
-          background: loading ? "#666" : "#f5c518",
-          color: "#000",
-          border: "none",
-          cursor: loading ? "not-allowed" : "pointer",
-          fontWeight: "bold",
-        }}
-      >
-        {loading ? "⏳ Enviando..." : "📤 Enviar al Backend"}
-      </button>
+    <div style={{ marginTop: "20px" }}>
+      <CustomCard variant="yellow" icon="🎮" title="Prueba de Conexión">
+        <p style={{ marginBottom: "20px" }}>
+          Utiliza este panel para verificar la comunicación en tiempo real con el servidor de la Universidad.
+        </p>
+        
+        <MyButton 
+          variant="yellow" 
+          onClick={handleSubmit} 
+          disabled={loading}
+          fullWidth
+          style={{ padding: "16px" }}
+        >
+          {loading ? "CONECTANDO..." : "ENVIAR SEÑAL DE PRUEBA"}
+        </MyButton>
 
-      {error && (
-        <div style={{ marginTop: "10px", padding: "10px", background: "#8b0000", color: "#fff" }}>
-          ❌ Error: {error}
-        </div>
-      )}
+        {error && (
+          <div style={{ 
+            marginTop: "20px", 
+            padding: "16px", 
+            backgroundColor: "var(--color-kahoot-red)", 
+            color: "#fff",
+            borderRadius: "12px",
+            fontWeight: "bold",
+            boxShadow: "0 4px 0 #a9132d"
+          }}>
+            ❌ Error de Conexión: {error}
+          </div>
+        )}
 
-      {response && (
-        <div style={{ marginTop: "10px", padding: "10px", background: "#006400", color: "#fff" }}>
-          ✅ Respuesta del backend:
-          <pre style={{ marginTop: "5px" }}>{JSON.stringify(response, null, 2)}</pre>
-        </div>
-      )}
+        {response && (
+          <div style={{ 
+            marginTop: "20px", 
+            padding: "16px", 
+            backgroundColor: "var(--color-success)", 
+            color: "#fff",
+            borderRadius: "12px",
+            fontWeight: "bold",
+            boxShadow: "0 4px 0 #1b5e20"
+          }}>
+            ✅ Conexión Exitosa:
+            <pre style={{ 
+              marginTop: "8px", 
+              fontSize: "0.8rem", 
+              backgroundColor: "rgba(0,0,0,0.2)", 
+              padding: "8px",
+              borderRadius: "8px",
+              overflowX: "auto"
+            }}>
+              {JSON.stringify(response, null, 2)}
+            </pre>
+          </div>
+        )}
+      </CustomCard>
     </div>
   );
 }
+

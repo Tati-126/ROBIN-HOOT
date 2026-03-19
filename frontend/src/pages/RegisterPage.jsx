@@ -65,38 +65,41 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="auth-page">
-      <div className="auth-container">
-        <div className="auth-card">
-          <h2>🏹 Crear Cuenta</h2>
-          <p className="auth-subtitle">Regístrate para empezar a jugar</p>
+    <div className="auth-page" style={{ backgroundColor: "var(--color-bg)", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 80px)" }}>
+      <div className="auth-container" style={{ width: "100%", maxWidth: "480px", padding: "20px" }}>
+        <CustomCard variant="primary" title="🏹 Crear Cuenta">
+          <p className="auth-subtitle" style={{ textAlign: "center", marginBottom: "24px" }}>
+            Regístrate para empezar a jugar
+          </p>
 
           {errors.root && (
             <div style={{
-              color: "#d32f2f",
-              backgroundColor: "#fdecea",
-              padding: "10px 14px",
+              color: "white",
+              backgroundColor: "var(--color-kahoot-red)",
+              padding: "12px",
               borderRadius: "8px",
               fontSize: "0.9rem",
               marginBottom: "16px",
               textAlign: "center",
+              fontWeight: "bold",
+              boxShadow: "0 4px 0 #a9132d"
             }}>
               {errors.root.message}
             </div>
           )}
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
             <FormInput
-              label="Nombre"
+              label="Nombre Completo"
               type="text"
               placeholder="Tu nombre"
               error={errors.nombre?.message}
               {...register("nombre")}
             />
             <FormInput
-              label="Email"
+              label="Email Institucional"
               type="email"
-              placeholder="tu@email.com"
+              placeholder="tu@uniputumayo.edu.co"
               error={errors.email?.message}
               {...register("email")}
             />
@@ -114,26 +117,31 @@ export default function RegisterPage() {
               error={errors.confirmPassword?.message}
               {...register("confirmPassword")}
             />
-            <MyButton type="submit" fullWidth isSubmitting={isSubmitting}>
-              Registrarse
+            <MyButton type="submit" variant="primary" fullWidth isSubmitting={isSubmitting} style={{ padding: "16px", marginTop: "10px" }}>
+              REGISTRARSE
             </MyButton>
           </form>
 
-          <div className="auth-toggle">
+          <div className="auth-toggle" style={{ marginTop: "24px", textAlign: "center", fontWeight: "600" }}>
             ¿Ya tienes cuenta?
-            <Link to="/login">Inicia sesión aquí</Link>
+            <Link to="/login" style={{ color: "var(--color-primary)", marginLeft: "8px", textDecoration: "underline" }}>
+              Inicia sesión aquí
+            </Link>
           </div>
-        </div>
+        </CustomCard>
       </div>
 
       <Modal isOpen={modalOpen} onClose={handleModalClose} title="¡Registro Exitoso!">
-        <p style={{ color: "#607d8b", marginBottom: "20px" }}>
-          Tu cuenta ha sido creada correctamente. Ahora puedes iniciar sesión.
-        </p>
-        <MyButton onClick={handleModalClose} fullWidth>
-          Ir a Iniciar Sesión
-        </MyButton>
+        <div style={{ textAlign: "center", padding: "10px" }}>
+          <p style={{ color: "var(--color-text-muted)", marginBottom: "30px", fontSize: "1.1rem" }}>
+            Tu cuenta ha sido creada correctamente. ¡Bienvenido a la comunidad!
+          </p>
+          <MyButton onClick={handleModalClose} variant="primary" fullWidth style={{ padding: "14px" }}>
+            IR A INICIAR SESIÓN
+          </MyButton>
+        </div>
       </Modal>
     </div>
   );
 }
+
