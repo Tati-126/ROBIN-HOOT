@@ -136,3 +136,45 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("usuario");
 };
+
+/**
+ * Crear una sesion de juego (genera PIN)
+ */
+export const crearSesion = async (juegoId, creadorId) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/sessions/start`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ juegoId, creadorId }),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "Error al crear la sesion");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("[API] Error al crear sesion:", error);
+    throw error;
+  }
+};
+
+/**
+ * Unirse a una sesion existente por PIN
+ */
+export const unirseASesion = async (pin, nickname, usuarioId) => {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/sessions/join`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ pin, nickname, usuarioId }),
+    });
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || "PIN invalido o sesion no encontrada");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("[API] Error al unirse a sesion:", error);
+    throw error;
+  }
+};

@@ -5,6 +5,7 @@ import CustomCard from "../components/ui/CustomCard";
 import MyButton from "../components/ui/MyButton";
 import RankingTable from "../components/RankingTable";
 import GameBoard from "../components/GameBoard";
+import CrearSesion from "../components/CrearSesion.jsx";
 import { useNavigate } from "react-router-dom";
 import { User, Trophy, Star, Activity, LogOut, Settings, Gamepad2, Rocket } from "lucide-react";
 
@@ -77,6 +78,8 @@ export default function Dashboard() {
 
         {/* Join Game */}
         <GameBoard />
+        {/* Crear Partida (docente) */}
+        <CrearSesion />
       </div>
 
       <h2 style={{ fontSize: "2.2rem", fontWeight: "900", color: "var(--color-primary)", marginBottom: "32px", display: "flex", alignItems: "center" }}>

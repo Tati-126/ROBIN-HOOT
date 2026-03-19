@@ -1,22 +1,32 @@
 import express from "express";
-import Usuario from "../models/Usuario.js";
+import Participant from "../src/modules/sessions/participant.model.js";
 
 const router = express.Router();
 
-// Obtener ranking de usuarios
+// Ranking global: suma de puntajes por usuario en todas las sesiones
 router.get("/", async (req, res) => {
   try {
-    const usuarios = await Usuario.find()
-      .populate("rolId", "nombre")
-      .select("nombre email rolId createdAt")
-      .limit(100)
-      .lean();
+    const ranking = await Participant.aggregate([
+      {
+        $group: {
+          _id: "$usuarioId",
+          nombre: { $first: "$nombre" },
+          puntaje: { $sum: "$puntaje" },
+        },
+      },
+      { $sort: { puntaje: -1 } },
+      { $limit: 20 },
+      {
+        $project: {
+          _id: 0,
+          usuarioId: "$_id",
+          nombre: 1,
+          puntaje: 1,
+        },
+      },
+    ]);
 
-    if (!usuarios || usuarios.length === 0) {
-      return res.json([]);
-    }
-
-    res.json(usuarios);
+    res.json(ranking);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

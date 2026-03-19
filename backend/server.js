@@ -12,6 +12,7 @@ import categoriaRoutes from "./routes/categoriaRoutes.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
 import productoRoutes from "./routes/productoRoutes.js";
 import rankingRoutes from "./routes/rankingRoutes.js";
+import sessionRoutes from "./src/modules/sessions/session.routes.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/api/categorias", categoriaRoutes);
 app.use("/api/usuarios", usuarioRoutes);
 app.use("/api/productos", productoRoutes);
 app.use("/api/ranking", rankingRoutes);
+app.use("/api/sessions", sessionRoutes);
 
 app.get("/", (req, res) => {
   res.send("API funcionando correctamente 🚀");
