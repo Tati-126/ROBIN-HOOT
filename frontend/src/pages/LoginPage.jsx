@@ -6,14 +6,13 @@ import { useAuth } from "../hooks/useAuth";
 import FormInput from "../components/ui/FormInput";
 import MyButton from "../components/ui/MyButton";
 import CustomCard from "../components/ui/CustomCard";
-import { Target } from "lucide-react";
-
+import { Target, Mail, Lock } from "lucide-react";
 
 const loginSchema = z.object({
   email: z
     .string()
     .min(1, "El email es requerido")
-    .email("Ingresa un email válido"),
+    .email("Ingresa un email valido"),
   password: z
     .string()
     .min(1, "La contraseña es requerida")
@@ -21,8 +20,7 @@ const loginSchema = z.object({
 });
 
 /**
- * LoginPage - Página de inicio de sesión
- * Usa React Hook Form + Zod para validaciones e integra con useAuth
+ * LoginPage - Pagina de inicio de sesion
  */
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -51,7 +49,7 @@ export default function LoginPage() {
   return (
     <div className="auth-page" style={{ backgroundColor: "var(--color-bg)", display: "flex", alignItems: "center", justifyContent: "center", minHeight: "calc(100vh - 80px)" }}>
       <div className="auth-container" style={{ width: "100%", maxWidth: "450px", padding: "20px" }}>
-        <CustomCard variant="primary" title={<span style={{ display: "flex", alignItems: "center", gap: "10px" }}><Target size={24} /> Iniciar Sesión</span>}>
+        <CustomCard variant="primary" title={<span style={{ display: "flex", alignItems: "center", gap: "10px" }}><Target size={24} /> Iniciar Sesion</span>}>
           <p className="auth-subtitle" style={{ textAlign: "center", marginBottom: "24px" }}>
             Bienvenido de nuevo a Robin HOOT
           </p>
@@ -93,9 +91,9 @@ export default function LoginPage() {
           </form>
 
           <div className="auth-toggle" style={{ marginTop: "24px", textAlign: "center", fontWeight: "600" }}>
-            ¿No tienes cuenta?
+            No tienes cuenta?
             <Link to="/register" style={{ color: "var(--color-primary)", marginLeft: "8px", textDecoration: "underline" }}>
-              Regístrate aquí
+              Registrate aqui
             </Link>
           </div>
         </CustomCard>
@@ -103,4 +101,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
 

@@ -16,51 +16,54 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar" style={{ 
-      backgroundColor: "var(--color-header)", 
-      borderBottom: "2px solid #eee",
-      padding: "16px 40px"
-    }}>
-      <Link to="/" className="navbar-logo" style={{ 
-        color: "var(--color-primary)", 
-        fontWeight: "900",
-        fontSize: "1.6rem",
-        display: "flex",
-        alignItems: "center",
-        gap: "8px"
-      }}>
-        <Target size={28} style={{ color: "var(--color-primary)" }} /> Robin HOOT
+    <nav className="navbar">
+      <Link to="/" className="navbar-logo">
+        <div style={{
+          backgroundColor: "var(--color-primary)",
+          width: "40px",
+          height: "40px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: "12px",
+          color: "white",
+          boxShadow: "0 4px 12px rgba(27, 94, 32, 0.4)"
+        }}>
+          <Target size={24} />
+        </div>
+        Robin HOOT
       </Link>
 
-      <div className="navbar-links" style={{ gap: "20px" }}>
+      <div className="navbar-links">
         {usuario ? (
           <>
-            <span className="navbar-user" style={{ color: "var(--color-text)", fontWeight: "600", display: "flex", alignItems: "center", gap: "8px" }}>
-              <User size={18} /> {usuario.nombre}
-            </span>
+            <div className="navbar-user">
+              <User size={20} style={{ color: "var(--color-primary)" }} />
+              <span>{usuario.nombre}</span>
+            </div>
             <Link to="/dashboard">
-              <MyButton variant="primary" style={{ padding: "10px 20px" }}>
-                <LayoutDashboard size={18} style={{ marginRight: "8px" }} /> Panel
+              <MyButton variant="primary" style={{ borderRadius: "14px" }}>
+                <LayoutDashboard size={18} style={{ marginRight: "8px" }} /> PANEL
               </MyButton>
             </Link>
             <MyButton
               variant="secondary"
               onClick={handleLogout}
-              style={{ padding: "10px 20px" }}
+              style={{ borderRadius: "14px", backgroundColor: "rgba(255,255,255,0.5)" }}
             >
-              <LogOut size={18} style={{ marginRight: "8px" }} /> Salir
+              <LogOut size={18} />
             </MyButton>
           </>
         ) : (
           <>
             <Link to="/login">
-              <MyButton variant="secondary" style={{ padding: "10px 20px" }}>
-                <LogIn size={18} style={{ marginRight: "8px" }} /> Entrar
+              <MyButton variant="secondary" style={{ borderRadius: "14px" }}>
+                ENTRAR
               </MyButton>
             </Link>
             <Link to="/register">
-              <MyButton variant="primary" style={{ padding: "10px 20px" }}>
-                <User size={18} style={{ marginRight: "8px" }} /> Unirse
+              <MyButton variant="primary" style={{ borderRadius: "14px", padding: "10px 24px" }}>
+                UNIRSE <LogIn size={18} style={{ marginLeft: "8px" }} />
               </MyButton>
             </Link>
           </>
@@ -69,5 +72,6 @@ export default function Navbar() {
     </nav>
   );
 }
+
 
 

@@ -1,9 +1,10 @@
 /* ─── Variables y Reset (Estilo Kahoot + Uniputumayo) ─────────────────────────── */
 :root {
-  /* Marca Institucional */
-  --color-primary: #1b5e20;        /* Verde Bosque Uniputumayo */
-  --color-primary-hover: #2e7d32;
-  --color-primary-accent: #4caf50;
+  /* Marca Institucional - Refined with brightness and depth */
+  --color-primary: #1b5e20;        
+  --color-primary-bright: #2e7d32;
+  --color-primary-glow: #43a047;
+  --color-primary-dark: #0d2e11;
   
   /* Colores Kahoot (Vibrantes) */
   --color-kahoot-purple: #46178f;
@@ -12,22 +13,25 @@
   --color-kahoot-yellow: #d89e00;
 
   /* Neutros y Fondos */
-  --color-header: #ffffff;
-  --color-bg: #f2f2f2;
+  --color-bg: #f8f9fa;
   --color-bg-card: #ffffff;
-  --color-text: #333333;
-  --color-text-muted: #666666;
+  --color-text: #212121;
+  --color-text-muted: #5f6368;
   
   /* Feedback */
   --color-error: #e21b3c;
   --color-success: #26890c;
   
-  /* UI Elements */
-  --border-radius: 12px;
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.15);
-  --shadow-tactile: 0 4px 0 rgba(0,0,0,0.15);
+  /* UI Elements - Larger radii and deeper shadows */
+  --border-radius: 16px;
+  --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+  --shadow-md: 0 8px 16px rgba(0,0,0,0.1);
+  --shadow-lg: 0 12px 24px rgba(0,0,0,0.15);
+  --shadow-tactile: 0 6px 0 rgba(0,0,0,0.12);
+  --shadow-glow: 0 0 20px rgba(46, 125, 50, 0.3);
+  
   --font-family: 'Montserrat', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -42,17 +46,18 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   min-height: 100vh;
-  line-height: 1.5;
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-top: 110px; /* Space for the floating navbar */
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.2s;
+/* Base Hover for Cards */
+.hover-lift {
+  transition: var(--transition-smooth);
 }
-
-a:hover {
-  opacity: 0.8;
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg), var(--shadow-tactile);
 }
 
 
@@ -64,61 +69,116 @@ a:hover {
   padding: 0 20px;
 }
 
-/* ─── Navbar ───────────────────────────────────────────────────── */
+/* ─── Innovative Navbar (Floating Glass) ────────────────────────── */
 .navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 20px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1); /* Darker border for contrast */
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 20px 25px -5px rgba(0, 0, 0, 0.1); /* Stronger shadow */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 30px;
-  background-color: var(--color-header);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 10px 28px;
+  z-index: 1000;
+  transition: var(--transition-smooth);
+}
+
+.navbar:hover {
+  background: rgba(255, 255, 255, 0.95);
+  width: 97%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
 .navbar-logo {
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--color-primary);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  transition: var(--transition-smooth);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 15px rgba(27, 94, 32, 0.3);
 }
 
 .navbar-links {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 }
 
 .navbar-user {
-  color: #b0bec5;
-  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(27, 94, 32, 0.08);
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+  border: 1px solid rgba(27, 94, 32, 0.12);
 }
 
 /* ─── Hero / Landing ──────────────────────────────────────────── */
 .hero {
   text-align: center;
-  padding: 90px 20px 70px;
-  background: linear-gradient(135deg, #00838f 0%, #00acc1 50%, #4dd0e1 100%);
+  padding: 120px 20px 100px;
+  background: radial-gradient(circle at top left, var(--color-primary-glow) 0%, var(--color-primary-bright) 30%, var(--color-primary) 70%, var(--color-primary-dark) 100%);
   color: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+  pointer-events: none;
+  animation: pulse-glow 8s infinite alternate ease-in-out;
+}
+
+@keyframes pulse-glow {
+  from { opacity: 0.3; transform: scale(1); }
+  to { opacity: 0.6; transform: scale(1.1); }
 }
 
 .hero h1 {
-  font-size: 2.8rem;
+  font-size: 3.5rem;
+  font-weight: 900;
   color: #ffffff;
-  margin-bottom: 18px;
-  line-height: 1.2;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-bottom: 24px;
+  line-height: 1.1;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.02em;
 }
 
 .hero p {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   color: rgba(255, 255, 255, 0.9);
-  max-width: 600px;
-  margin: 0 auto 35px;
-  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
 }
 
 .section {

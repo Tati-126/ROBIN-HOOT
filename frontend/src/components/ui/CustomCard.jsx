@@ -61,7 +61,7 @@ export default function CustomCard({
   };
 
   return (
-    <div className="custom-card" style={cardStyle}>
+    <div className="custom-card hover-lift" style={cardStyle}>
       {(icon || title) && (
         <div style={headerStyle}>
           {icon && <span style={iconStyle}>{icon}</span>}
