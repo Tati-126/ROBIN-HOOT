@@ -2,8 +2,28 @@
 
 Aplicación web SPA de quizzes en tiempo real construida con **React + Vite** (frontend) y **Express + MongoDB + Socket.io** (backend).
 
+[![Ver documentación en Postman](https://run.pstmn.io/button.svg)](https://diazt0346-7144053.postman.co/workspace/2606d8f2-b50f-4c74-84ae-c373550d9a69/collection/53390292-d76b2b90-fdd2-4069-ad0b-576b1e83acbc?action=share&source=copy-link&creator=53390292)
+
+> Para importar y probar localmente: Postman → **Import** → selecciona `backend/robin-hoot.postman_collection.json`
+
+---
+
 ## Stack Tecnológico
 
+### Backend
+| Tecnología | Versión | Uso |
+|---|---|---|
+| Node.js | 18+ | Runtime |
+| Express | 5.x | Framework HTTP |
+| MongoDB | Atlas / Local | Base de datos |
+| Mongoose | 9.x | ODM |
+| JSON Web Token | 9.x | Autenticación |
+| cookie-parser | 1.x | Cookies HTTP-only |
+| bcryptjs | 3.x | Hash de contraseñas |
+| Socket.io | 4.x | Tiempo real |
+| dotenv | 17.x | Variables de entorno |
+
+### Frontend
 | Tecnología | Versión | Uso |
 |---|---|---|
 | Vite | 6.0.5 | Bundler y dev server |
@@ -13,35 +33,55 @@ Aplicación web SPA de quizzes en tiempo real construida con **React + Vite** (f
 | Zod | 3.x | Validación de esquemas |
 | Socket.io Client | 4.8.1 | Comunicación en tiempo real |
 
+---
+
 ## Estructura del Proyecto
 
 ```
 ROBIN-HOOT/
 ├── frontend/
-│   ├── src/
-│   │   ├── components/       # Componentes reutilizables
-│   │   │   ├── ui/           # MyButton, CustomCard, FormInput, Modal, Navbar
-│   │   │   ├── GameBoard.jsx
-│   │   │   └── RankingTable.jsx
-│   │   ├── context/          # AuthContext (Context API)
-│   │   ├── hooks/            # useAuth (hook personalizado)
-│   │   ├── pages/            # LandingPage, LoginPage, RegisterPage, Dashboard
-│   │   ├── services/         # api.js (llamadas al backend)
-│   │   ├── App.jsx           # Router principal
-│   │   ├── App.css           # Estilos globales responsive
-│   │   └── main.jsx          # Entry point con AuthProvider
-│   ├── index.html
-│   ├── package.json
-│   └── vite.config.js
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   ├── config/
-│   └── server.js
-└── docker-compose.yml
+│   └── src/
+│       ├── components/         # Componentes reutilizables (ui/, GameBoard, etc.)
+│       ├── context/            # AuthContext (Context API)
+│       ├── hooks/              # useAuth
+│       ├── pages/              # LandingPage, LoginPage, RegisterPage, Dashboard
+│       └── services/           # api.js
+└── backend/
+    ├── server.js               # Punto de entrada (HTTP + Socket.io)
+    └── src/
+        ├── config/
+        │   └── db.js           # Conexión a MongoDB
+        ├── models/
+        │   ├── Usuario.js      # Modelo Usuario → ref: Rol
+        │   ├── Producto.js     # Modelo Producto → ref: Categoria, Usuario
+        │   ├── Categoria.js    # Modelo Categoría
+        │   └── Rol.js          # Modelo Rol
+        ├── controllers/
+        │   ├── usuarioController.js
+        │   ├── productoController.js
+        │   └── categoriaController.js
+        ├── routes/
+        │   ├── usuarioRoutes.js
+        │   ├── productoRoutes.js
+        │   └── categoriaRoutes.js
+        ├── middlewares/
+        │   ├── auth.js         # Verificación de JWT desde cookie HTTP-only
+        │   ├── validacion.js   # Validación de campos requeridos
+        │   └── errorHandler.js # Manejo centralizado de errores
+        └── modules/
+            └── sessions/       # Lógica de partidas en tiempo real (Socket.io)
 ```
+
+### Relaciones entre modelos
+
+```
+Rol  ←──── Usuario ────→  (crea) Producto ──→ Categoria
+```
+
+Cada `Producto` tiene una referencia `ObjectId` a `Categoria` y otra a `Usuario` (creadoPor).  
+Cada `Usuario` tiene una referencia `ObjectId` a `Rol`.
+
+---
 
 ## Instalación y Ejecución
 
@@ -49,7 +89,41 @@ ROBIN-HOOT/
 - Node.js 18+
 - MongoDB (local o Atlas)
 
-### Frontend
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/robin-hoot.git
+cd robin-hoot
+```
+
+### 2. Backend
+
+```bash
+cd backend
+npm install
+```
+
+Crea el archivo de variables de entorno:
+
+```bash
+# backend/.env
+MONGO_URI=mongodb://localhost:27017/robinhoot
+JWT_SECRET=tu_secreto_jwt_muy_seguro
+PORT=5000
+NODE_ENV=development
+```
+
+Inicia el servidor:
+
+```bash
+npm run dev      # modo desarrollo (nodemon)
+npm start        # modo producción
+npm run seed     # cargar datos de prueba
+```
+
+El servidor API estará disponible en `http://localhost:5000`.
+
+### 3. Frontend
 
 ```bash
 cd frontend
@@ -59,151 +133,91 @@ npm run dev
 
 La app estará disponible en `http://localhost:5173`.
 
-### Backend
+---
 
-```bash
-cd backend
-npm install
-npm run dev
+## Seguridad — Autenticación JWT con Cookies HTTP-only
+
+El token JWT se almacena en una **cookie HTTP-only**, lo que impide su acceso desde JavaScript del navegador y mitiga ataques XSS.
+
+```
+POST /api/usuarios/auth/login
+→ Set-Cookie: token=<JWT>; HttpOnly; SameSite=Strict
 ```
 
-El servidor API estará en `http://localhost:5000`.
-
-### Variables de entorno
-
-Crear un archivo `.env` en `/backend` basado en `.env.example`:
-
-```env
-MONGO_URI=mongodb://localhost:27017/robinhoot
-JWT_SECRET=tu_secreto_jwt
-PORT=5000
-```
-
-En `/frontend` puedes crear un `.env` opcional:
-
-```env
-VITE_BACKEND_URL=http://localhost:5000
-```
-
-## Funcionalidades
-
-- **Landing Page**: Página de aterrizaje con sección Hero y secciones informativas
-- **Autenticación**: Login y registro con validaciones (React Hook Form + Zod)
-- **Dashboard protegido**: Vista exclusiva para usuarios autenticados con ranking y datos
-- **Gestión de estado global**: AuthContext con Context API
-- **Componentes reutilizables**: MyButton, CustomCard, FormInput, Modal, Navbar
-- **Responsive**: Diseño adaptable a móviles, tablets y escritorio
-- **Tiempo real**: Comunicación con Socket.io para partidas en vivo
-  {
-    "_id": "...",
-    "nombre": "ADMIN",
-    "createdAt": "...",
-    "updatedAt": "..."
-  }
-]
-```
-
-#### Obtener rol por ID
-- **GET** `/api/roles/:id`
-
-#### Crear rol
-- **POST** `/api/roles`
-- **Body:**
-```json
-{
-  "nombre": "ADMIN"
-}
-```
-
-#### Actualizar rol
-- **PUT** `/api/roles/:id`
-- **Body:**
-```json
-{
-  "nombre": "DOCENTE"
-}
-```
-
-#### Eliminar rol
-- **DELETE** `/api/roles/:id`
+Las rutas protegidas verifican la cookie automáticamente mediante el middleware `src/middlewares/auth.js`.
 
 ---
 
-### USUARIOS
+## Referencia de la API
 
-#### Obtener todos los usuarios
-- **GET** `/api/usuarios`
-- **Respuesta:**
-```json
-[
-  {
-    "_id": "...",
-    "nombre": "Juan",
-    "email": "juan@example.com",
-    "rolId": {
-      "_id": "...",
-      "nombre": "ESTUDIANTE"
-    },
-    "fechaRegistro": "...",
-    "createdAt": "...",
-    "updatedAt": "..."
-  }
-]
+### Auth (públicas)
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| POST | `/api/usuarios/auth/registrar` | Registrar nuevo usuario |
+| POST | `/api/usuarios/auth/login` | Login → devuelve cookie HTTP-only |
+| POST | `/api/usuarios/auth/logout` | Logout → borra cookie |
+| GET | `/api/usuarios/perfil` | 🔒 Perfil del usuario autenticado |
+
+### Usuarios
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/api/usuarios` | Listar usuarios |
+| GET | `/api/usuarios/:id` | Obtener usuario por ID |
+| PUT | `/api/usuarios/:id` | 🔒 Actualizar usuario |
+| DELETE | `/api/usuarios/:id` | 🔒 Eliminar usuario |
+
+### Categorías
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/api/categorias` | Listar categorías |
+| GET | `/api/categorias/:id` | Obtener categoría |
+| POST | `/api/categorias` | 🔒 Crear categoría |
+| PUT | `/api/categorias/:id` | 🔒 Actualizar categoría |
+| DELETE | `/api/categorias/:id` | 🔒 Eliminar categoría |
+
+### Productos
+
+| Método | Ruta | Descripción |
+|---|---|---|
+| GET | `/api/productos` | Listar productos (con categoría populada) |
+| GET | `/api/productos/:id` | Obtener producto |
+| POST | `/api/productos` | 🔒 Crear producto |
+| PUT | `/api/productos/:id` | 🔒 Actualizar producto |
+| DELETE | `/api/productos/:id` | 🔒 Eliminar producto |
+
+> 🔒 = Requiere autenticación (cookie JWT activa)
+
+### Ejemplo: Registro y Login
+
+```bash
+# Registrar
+curl -X POST http://localhost:5000/api/usuarios/auth/registrar \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Ana","email":"ana@demo.com","password":"secret123"}'
+
+# Login (guarda cookie automáticamente con -c)
+curl -c cookies.txt -X POST http://localhost:5000/api/usuarios/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"ana@demo.com","password":"secret123"}'
+
+# Ruta protegida (envía cookie con -b)
+curl -b cookies.txt http://localhost:5000/api/usuarios/perfil
 ```
 
-#### Obtener usuario por ID
-- **GET** `/api/usuarios/:id`
+---
 
-#### Crear usuario
-- **POST** `/api/usuarios`
-- **Body:**
-```json
-{
-  "nombre": "Juan Pérez",
-  "email": "juan@example.com",
-  "contraseña": "micontraseña123",
-  "rolId": "id_del_rol"
-}
-```
-- **Respuesta:** Usuario creado con contraseña encriptada
+## Características Implementadas
 
-#### Actualizar usuario
-- **PUT** `/api/usuarios/:id`
-- **Body:**
-```json
-{
-  "nombre": "Juan Carlos",
-  "email": "juancarlos@example.com",
-  "rolId": "id_del_rol"
-}
-```
+- ✅ Estructura MVC en `src/` (models, controllers, routes, config, middlewares)
+- ✅ 3 modelos relacionados con `ObjectId`: `Usuario → Rol`, `Producto → Categoria`, `Producto → Usuario`
+- ✅ Autenticación JWT con registro y login
+- ✅ Token JWT en cookie **HTTP-only** (mitiga XSS)
+- ✅ Rutas protegidas con middleware de autenticación
+- ✅ CORS configurado para frontend local (`localhost:5173`)
+- ✅ Tiempo real con Socket.io para partidas de quiz
+- ✅ Hash de contraseñas con bcryptjs
+- ✅ Manejo centralizado de errores
 
-#### Cambiar contraseña
-- **PATCH** `/api/usuarios/:id/cambiar-contraseña`
-- **Body:**
-```json
-{
-  "contraseñaActual": "micontraseña123",
-  "contraseñaNueva": "micontraseñanueva456"
-}
-```
-
-#### Eliminar usuario
-- **DELETE** `/api/usuarios/:id`
-
-## Características Principales
-
-✅ Modelos con Mongoose
-✅ CRUD completo para Roles y Usuarios
-✅ Encriptación de contraseñas con bcryptjs
-✅ Validación de datos
-✅ Relaciones entre modelos (populate)
-✅ Manejo de errores
-✅ Timestamps automáticos
-
-## Notas
-
-- Las contraseñas se encriptan automáticamente al crear o cambiar
-- Los emails deben ser únicos y válidos
-- Los roles disponibles son: ADMIN, DOCENTE, ESTUDIANTE
-- Todos los usuarios deben tener un rol asignado
