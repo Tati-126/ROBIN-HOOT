@@ -2,7 +2,7 @@
 
 Aplicación web SPA de quizzes en tiempo real construida con **React + Vite** (frontend) y **Express + MongoDB + Socket.io** (backend).
 
-[![Ver documentación en Postman](https://run.pstmn.io/button.svg)](https://diazt0346-7144053.postman.co/workspace/2606d8f2-b50f-4c74-84ae-c373550d9a69/collection/53390292-d76b2b90-fdd2-4069-ad0b-576b1e83acbc?action=share&source=copy-link&creator=53390292)
+[![Ver documentación en Postman](https://run.pstmn.io/button.svg)](https://diazt0346-7144053.postman.co/workspace/2606d8f2-b50f-4c74-84ae-c373550d9a69/collection/53390292-7f54ae44-f5c5-49dc-8e0c-9cfabd72dfc7?action=share&source=copy-link&creator=53390292)
 
 > Para importar y probar localmente: Postman → **Import** → selecciona `backend/robin-hoot.postman_collection.json`
 
