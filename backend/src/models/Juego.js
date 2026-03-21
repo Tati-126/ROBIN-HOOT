@@ -12,7 +12,8 @@ const juegoSchema = new mongoose.Schema(
       trim: true,
     },
     creadorId: {
-      type: Number,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Usuario",
       required: [true, "El ID del creador es requerido"],
     },
     estado: {
