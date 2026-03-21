@@ -1,53 +1,22 @@
-import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
-import { connectDB } from "./config/db.js";
-import { createServer } from "http";
-import { Server } from "socket.io";
-import { initSocket } from "./src/modules/sessions/session.socket.js";
-
-import rolRoutes from "./routes/rolRoutes.js";
-import juegoRoutes from "./routes/juegoRoutes.js";
-import categoriaRoutes from "./routes/categoriaRoutes.js";
-import usuarioRoutes from "./routes/usuarioRoutes.js";
-import productoRoutes from "./routes/productoRoutes.js";
-import rankingRoutes from "./routes/rankingRoutes.js";
-import sessionRoutes from "./src/modules/sessions/session.routes.js";
-
 dotenv.config();
 
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { connectDB } from "./src/config/db.js";
+import { initSocket } from "./src/modules/sessions/session.socket.js";
+import app from "./src/app.js";
+
 const PORT = process.env.PORT || 5000;
-
-const app = express();
-app.use(cors());
-app.use(express.json());
-
-// RUTAS
-app.use("/api/roles", rolRoutes);
-app.use("/api/juegos", juegoRoutes);
-app.use("/api/categorias", categoriaRoutes);
-app.use("/api/usuarios", usuarioRoutes);
-app.use("/api/productos", productoRoutes);
-app.use("/api/ranking", rankingRoutes);
-app.use("/api/sessions", sessionRoutes);
-
-app.get("/", (req, res) => {
-  res.send("API funcionando correctamente 🚀");
-});
-
-// MANEJO DE ERRORES
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Error del servidor" });
-});
 
 // SERVIDOR HTTP + SOCKET
 const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: ["http://localhost:5173", "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   },
 });
 
