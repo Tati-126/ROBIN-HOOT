@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swagger.js";
 
 // ── Rutas MVC (src/routes) ────────────────────────────────────────────────────
 import usuarioRoutes from "./routes/usuarioRoutes.js";
@@ -45,9 +47,12 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// ── Swagger UI ───────────────────────────────────────────────────────────────
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // ── Health check ──────────────────────────────────────────────────────────────
 app.get("/", (req, res) => {
-  res.json({ message: "RobinHoot API funcionando", version: "1.0.0" });
+  res.json({ message: "RobinHoot API funcionando", version: "1.0.0", docs: "/api-docs" });
 });
 
 // ── Rutas MVC principales ─────────────────────────────────────────────────────
