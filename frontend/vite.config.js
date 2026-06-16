@@ -22,4 +22,18 @@ export default defineConfig({
             },
         },
     },
+    test: {
+        globals: true,
+        environment: "jsdom",
+        setupFiles: "./src/setupTests.js",
+        // Correr tests en un solo proceso para evitar out-of-memory
+        pool: "forks",
+        poolOptions: {
+            forks: {
+                singleFork: true,
+                // Aumentar la memoria disponible para Node.js
+                execArgv: ["--max-old-space-size=2048"],
+            },
+        },
+    },
 });

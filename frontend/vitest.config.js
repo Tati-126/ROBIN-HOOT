@@ -6,8 +6,14 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: './src/setupTests.js', // Archivo opcional si necesitas setup
+    setupFiles: './src/setupTests.js',
     exclude: ['node_modules', 'dist', 'e2e/**'],
+    // Correr en un solo proceso para evitar "out of memory"
+    pool: 'forks',
+    singleFork: true,
+    forkOptions: {
+      execArgv: ['--max-old-space-size=4096'],
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
