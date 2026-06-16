@@ -28,6 +28,6 @@ dist/
 build/
 
 # Testing
-coverage/
+# coverage/ — se sube como evidencia de la fase final
 playwright-report/
 test-results/
